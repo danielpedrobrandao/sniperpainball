@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNIPER Paintball Club | Precisão de Elite</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-red: #e62117; 
+            --black: #0d0d0d;
+            --gray-dark: #1a1a1a;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--black); 
+            color: var(--white); 
+            scroll-behavior: smooth;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; width: 100%; padding: 15px 10%;
+            background: rgba(13, 13, 13, 0.95);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border-bottom: 3px solid var(--primary-red);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo img { height: 50px; }
+        .nav-logo span { font-family: 'Oswald'; font-size: 1.8rem; color: var(--white); text-transform: uppercase; }
+
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--white); font-weight: bold; text-transform: uppercase; transition: 0.3s; font-size: 0.8rem; }
+        .nav-links a:hover { color: var(--primary-red); }
+
+        /* HERO */
+        .hero { 
+            height: 100vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://i.postimg.cc/5trP4ZZc/paintball.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+        .hero h1 { font-family: 'Oswald'; font-size: 5rem; text-transform: uppercase; line-height: 1; margin-bottom: 15px; }
+        .hero h1 span { color: var(--primary-red); }
+
+        /* ANIMAÇÃO DE TIROS */
+        @keyframes shot-shake {
+            0% { transform: translate(0,0); }
+            20% { transform: translate(-3px, 2px); }
+            40% { transform: translate(3px, -2px); }
+            100% { transform: translate(0,0); }
+        }
+        @keyframes muzzle-flash {
+            50% { box-shadow: 0 0 25px 5px white, 0 0 40px 10px var(--primary-red); }
+        }
+        .btn-shot:hover {
+            animation: shot-shake 0.1s infinite, muzzle-flash 0.1s infinite;
+            background: #ff3c30 !important;
+        }
+
+        /* GALERIA */
+        .gallery-section { padding: 80px 10%; text-align: center; }
+        .slider-container { position: relative; max-width: 500px; margin: 40px auto; overflow: hidden; border: 4px solid var(--gray-dark); }
+        .slides { display: flex; transition: transform 0.5s; }
+        .slides img { width: 100%; flex-shrink: 0; }
+
+        /* PACOTES */
+        .pricing { padding: 100px 10%; text-align: center; }
+        .grid-prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .price-card { background: var(--gray-dark); padding: 40px 20px; border: 1px solid #333; transition: 0.4s; }
+        .price-card:hover { border-color: var(--primary-red); transform: translateY(-5px); }
+        .price-card.featured { border: 2px solid var(--primary-red); position: relative; }
+        .price-card .cost { font-size: 3rem; font-weight: bold; color: var(--primary-red); display: block; margin: 15px 0; }
+        .price-card ul { list-style: none; margin-bottom: 20px; font-size: 0.9rem; color: #bbb; }
+
+        /* EXTRAS */
+        .extras-bar { background: var(--primary-red); padding: 20px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px; }
+        .extra-item { font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+
+        /* ESTRUTURA E REGRAS */
+        .rules-section { padding: 60px 10%; background: var(--gray-dark); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .rule-box { background: var(--black); padding: 30px; border-left: 4px solid var(--primary-red); }
+        .rule-box h3 { font-family: 'Oswald'; margin-bottom: 15px; color: var(--primary-red); }
+        .rule-box ul { list-style: none; line-height: 1.8; font-size: 0.9rem; }
+
+        /* AGENDAMENTO */
+        .booking { padding: 100px 10%; }
+        .booking-container { max-width: 600px; margin: 0 auto; }
+        input, select, textarea { width: 100%; padding: 15px; background: #0d0d0d; border: 1px solid #444; color: white; margin-bottom: 15px; }
+        .btn-action { background: var(--primary-red); color: white; padding: 18px; border: none; font-weight: bold; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; width: 100%; text-align: center;}
+
+        /* BOTÕES FLUTUANTES */
+        .floating-buttons { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
+        .float-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: white; text-decoration: none; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); transition: 0.3s; }
+        .float-btn:hover { transform: scale(1.1); }
+        .whatsapp-float { background-color: #25d366; }
+        .facebook-float { background-color: #1877F2; }
+
+        footer { padding: 50px; text-align: center; background: #000; color: #555; font-size: 0.8rem; }
+        @media (max-width: 768px) { .hero h1 { font-size: 3rem; } .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <img src="https://i.postimg.cc/6qMcPgLx/logo-sniper-removebg-preview.png" alt="Sniper Logo">
+            <span>SNIPER</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#galeria">Galeria</a></li>
+            <li><a href="#pacotes">Missões</a></li>
+            <li><a href="#regras">Regras</a></li>
+            <li><a href="#reservas">Reservar</a></li>
+        </ul>
+    </nav>
+
+    <div class="floating-buttons">
+        <a href="https://www.facebook.com/5nipee/" class="float-btn facebook-float" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/5547996121369" class="float-btn whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <header class="hero" id="inicio">
+        <div class="hero-content animate__animated animate__zoomIn">
+            <img src="https://i.postimg.cc/6qMcPgLx/logo-sniper-removebg-preview.png" alt="Sniper Paintball" style="width: 250px;">
+            <h1>NA MIRA DA <span>ADRENALINA</span></h1>
+            <a href="#reservas" class="btn-action btn-shot" style="width: auto; padding: 15px 50px;">
+                <i class="fas fa-crosshairs"></i> INICIAR OPERAÇÃO
+            </a>
+        </div>
+    </header>
+
+    <section id="galeria" class="gallery-section">
+        <h2 style="font-family: 'Oswald'; font-size: 2.5rem; margin-bottom: 20px;">CAMPO DE BATALHA</h2>
+        <div class="slider-container">
+            <div class="slides" id="slider">
+                <img src="https://i.postimg.cc/7YYJYfD1/673809154-18099411833001634-6560299579050579644-n.jpg">
+                <img src="https://i.postimg.cc/nrTsGtK2/490308443-1207347121394956-630897127823773225-n.jpg">
+                <img src="https://i.postimg.cc/sx3QW2Wg/489462057-1204021168394218-8786737138208467943-n.jpg">
+                <img src="https://i.postimg.cc/qRVCkwM2/489035611-1204974054965596-4895515801694834215-n.jpg">
+                <img src="https://i.postimg.cc/8cbvXvGR/489034510-1204974104965591-5861729328782812564-n.jpg">
+            </div>
+        </div>
+    </section>
+
+    <section id="pacotes" class="pricing">
+        <h2 style="font-family: 'Oswald'; font-size: 3rem; margin-bottom: 10px;">ESCOLHA SEU ARSENAL</h2>
+        <p style="color: #888; margin-bottom: 40px;">Mínimo 8 | Máximo 50 jogadores</p>
+        
+        <div class="grid-prices">
+            <div class="price-card">
+                <h3>PADRÃO</h3>
+                <span class="cost">R$ 60</span>
+                <ul>
+                    <li>1 Hora de Jogo</li>
+                    <li>100 Bolinhas</li>
+                    <li>Equipamento Completo</li>
+                </ul>
+                <a href="#reservas" class="btn-action">Escolher</a>
+            </div>
+            <div class="price-card featured">
+                <div style="background: white; color: black; position: absolute; top: 0; left: 50%; transform: translateX(-50%); padding: 5px 15px; font-size: 0.7rem; font-weight: bold;">MAIS POPULAR</div>
+                <h3>VIP</h3>
+                <span class="cost">R$ 85</span>
+                <ul>
+                    <li>1 Hora de Jogo</li>
+                    <li>200 Bolinhas</li>
+                    <li>Válido p/ grupo todo</li>
+                </ul>
+                <a href="#reservas" class="btn-action">Escolher</a>
+            </div>
+            <div class="price-card">
+                <h3>SEMANA</h3>
+                <span class="cost">R$ 110</span>
+                <ul>
+                    <li>2 Horas de Jogo</li>
+                    <li>200 Bolinhas</li>
+                    <li>Combate Intenso</li>
+                </ul>
+                <a href="#reservas" class="btn-action">Escolher</a>
+            </div>
+        </div>
+
+        <div class="extras-bar">
+            <div class="extra-item"><i class="fas fa-plus-circle"></i> Recarga 50un: R$ 15</div>
+            <div class="extra-item"><i class="fas fa-tshirt"></i> Macacão: R$ 10</div>
+            <div class="extra-item"><i class="fas fa-check-double"></i> Incluso: Máscara, Colete e Marcador</div>
+        </div>
+    </section>
+
+    <section id="regras" class="rules-section">
+        <div class="rule-box">
+            <h3>🥩 ESTRUTURA</h3>
+            <ul>
+                <li>• Churrasqueira: <strong>GRÁTIS!</strong></li>
+                <li>• Bebidas: Consumo exclusivo do local.</li>
+                <li>• Não aceitamos bebidas externas.</li>
+            </ul>
+        </div>
+        <div class="rule-box">
+            <h3>⚠️ RESERVAS</h3>
+            <ul>
+                <li>• Apenas mediante pagamento antecipado.</li>
+                <li>• Valor da reserva é abatido no total do dia.</li>
+                <li>• Cancelamento: Remarcação com 24h de aviso.</li>
+            </ul>
+        </div>
+        <div class="rule-box">
+            <h3>💳 PAGAMENTO</h3>
+            <ul>
+                <li>• Pix</li>
+                <li>• Cartão de Débito</li>
+                <li>• Cartão de Crédito</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="reservas" class="booking">
+        <div class="booking-container">
+            <h2 style="font-family: 'Oswald'; text-align: center; font-size: 2.5rem; margin-bottom: 20px; color: var(--primary-red);">RESERVAR OPERAÇÃO</h2>
+            <form id="formSniper">
+                <input type="text" id="nomeLider" placeholder="Nome do Líder" required>
+                <input type="number" id="numJogadores" placeholder="Quantidade de Jogadores" required>
+                <input type="datetime-local" id="dataMissao" required>
+                <button type="submit" class="btn-action">Verificar Agenda no WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <footer><p>© 2026 SNIPER PAINTBALL CLUB - Joinville/SC</p></footer>
+
+    <script>
+        const slider = document.getElementById('slider');
+        let index = 0;
+        function showNextSlide() {
+            index++;
+            if (index >= 5) index = 0; 
+            slider.style.transform = `translateX(${-index * 100}%)`;
+        }
+        setInterval(showNextSlide, 3000); 
+
+        document.getElementById('formSniper').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fone = "5547996121369";
+            const nome = document.getElementById('nomeLider').value;
+            const qtd = document.getElementById('numJogadores').value;
+            const data = document.getElementById('dataMissao').value;
+            const msg = `*🎯 SNIPER PAINTBALL 🎯*%0AOlá! Gostaria de verificar a agenda.%0A*Líder:* ${nome}%0A*Jogadores:* ${qtd}%0A*Data/Hora:* ${data}`;
+            window.open(`https://wa.me/${fone}?text=${msg}`, '_blank');
+        });
+    </script>
+</body>
+</html>
